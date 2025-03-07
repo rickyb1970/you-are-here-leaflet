@@ -1,0 +1,7 @@
+{
+  "name": "you-are-here-leaf",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
