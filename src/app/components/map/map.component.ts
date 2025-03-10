@@ -1,5 +1,5 @@
 import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
-import * as L from 'leaflet/dis/leaflet';
+import * as L from 'leaflet';
 import { Geolocation, Position } from '@capacitor/geolocation';
 
 @Component({
@@ -16,16 +16,20 @@ export class MapComponent implements AfterViewInit {
 
   async ngAfterViewInit() {
     try {
+
+      const coordinates = await this.getCurrentPosition();
+
+      L.Icon.Default.imagePath = 'assets/leaflet/images/';
+
       // Initialize map with dummy coordinates
-      this.map = L.map(this.mapContainer.nativeElement).setView([0, 0], 1);
+      this.map = L.map(this.mapContainer.nativeElement).setView([coordinates.lat, coordinates.lng], 100);
 
       // Add OpenStreetMap tiles
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap contributors'
       }).addTo(this.map);
 
       // Get current position using Capacitor
-      const coordinates = await this.getCurrentPosition();
       this.updateMapPosition(coordinates.lat, coordinates.lng);
 
     } catch (error) {
@@ -48,7 +52,7 @@ export class MapComponent implements AfterViewInit {
 
   private updateMapPosition(lat: number, lng: number) {
     // Center the map
-    this.map.setView([lat, lng], 15);
+    this.map.setView([lat, lng], 100);
 
     // Remove existing marker
     if (this.marker) {
