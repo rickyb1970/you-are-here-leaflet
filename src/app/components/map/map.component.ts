@@ -23,7 +23,7 @@ export class MapComponent implements AfterViewInit {
 
       // Initialize map with dummy coordinates
       this.map = L.map(this.mapContainer.nativeElement).setView([coordinates.lat, coordinates.lng], 100);
-
+      
       // Add OpenStreetMap tiles
       L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap contributors'
